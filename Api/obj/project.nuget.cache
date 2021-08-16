@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8ATx3E13btUYtL4s+IWMpiJcsYpRN049R0ir3KK/MRxFVddgLEZsnAd9vqoJVHfP1EBOos1Cl0mz5ARQUmZTJg==",
+  "dgSpecHash": "LgjQt/Vw294IX1nvpsoemOo8KcEH3YnVbKXDDOfzwsigmTI12b7ghXAS1oBgenmTz4TLj4TbJGAHZV5Ymcl/6w==",
   "success": true,
-  "projectFilePath": "/home/emiliano/Escritorio/Repositorio/ChaallengeCsharp/Api/Api.csproj",
+  "projectFilePath": "/home/emiliano/Escritorio/Repositorio/ChallengeCsharp/Api/Api.csproj",
   "expectedPackageFiles": [
     "/home/emiliano/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",
     "/home/emiliano/.nuget/packages/microsoft.aspnetcore.jsonpatch/5.0.9/microsoft.aspnetcore.jsonpatch.5.0.9.nupkg.sha512",

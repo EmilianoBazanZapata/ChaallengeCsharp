@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/emiliano/Escritorio/Repositorio/ChaallengeCsharp/Api/Api.csproj": {}
+    "/home/emiliano/Escritorio/Repositorio/ChallengeCsharp/Api/Api.csproj": {}
   },
   "projects": {
-    "/home/emiliano/Escritorio/Repositorio/ChaallengeCsharp/Api/Api.csproj": {
+    "/home/emiliano/Escritorio/Repositorio/ChallengeCsharp/Api/Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/emiliano/Escritorio/Repositorio/ChaallengeCsharp/Api/Api.csproj",
+        "projectUniqueName": "/home/emiliano/Escritorio/Repositorio/ChallengeCsharp/Api/Api.csproj",
         "projectName": "Api",
-        "projectPath": "/home/emiliano/Escritorio/Repositorio/ChaallengeCsharp/Api/Api.csproj",
+        "projectPath": "/home/emiliano/Escritorio/Repositorio/ChallengeCsharp/Api/Api.csproj",
         "packagesPath": "/home/emiliano/.nuget/packages/",
-        "outputPath": "/home/emiliano/Escritorio/Repositorio/ChaallengeCsharp/Api/obj/",
+        "outputPath": "/home/emiliano/Escritorio/Repositorio/ChallengeCsharp/Api/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/emiliano/.nuget/NuGet/NuGet.Config"
