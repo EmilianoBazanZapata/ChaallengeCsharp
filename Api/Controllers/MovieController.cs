@@ -5,6 +5,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Comandos.ComandosPelicula;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -61,6 +62,76 @@ namespace Api.Controllers
                 resultado.Error = "Ocurrio un Error Inesperado";
                 resultado.InfoAdicional = ex.ToString();
                 return new JsonResult(resultado.Error + resultado.InfoAdicional);
+            }
+        }
+        [HttpPost]
+        [Route("Movie/AddMovie")]
+        public JsonResult AgregarPelicula([FromBody] ComandoAgregarPelicula pelicula)
+        {
+            var resultado = new CharacterResultado();
+            //genero un string con la consulta hacia la BD
+                                                          
+
+            string Consulta = @"EXEC UP_AGREGAR_PELICULA @TITULO, @FECHA , @CALIFICACION, @IMAGEN";
+            //CREO UNA INSTANCIA NUEVA DE UN DATATABLE
+            DataTable tb = new DataTable();
+            //creo una variable reader para capturar los datos
+            SqlDataReader MyReader;
+            //TOMO LA CADENA CONEXXION QUE SE UBICA EN APPSETINGS.JSON
+            string sqlDataSource = _configuration.GetConnectionString("BD");
+
+            if (pelicula.Titulo.Equals(""))
+            {
+                resultado.Error = "Debe Ingresar un Titulo";
+                return new JsonResult(resultado.Error);
+            }
+            if (pelicula.imagen.Equals(""))
+            {
+                resultado.Error = "Debe Ingresar una imagen";
+                return new JsonResult(resultado.Error);
+            }
+            if (pelicula.Calificacion.Equals(""))
+            {
+                resultado.Error = "Debe Ingreesar una Calificacion";
+                return new JsonResult(resultado.Error);
+            }
+            if (pelicula.FechaCreacion.Equals(""))
+            {
+                resultado.Error = "Debe Ingreesar una Fecha de Creacion";
+                return new JsonResult(resultado.Error);
+            }
+            else
+            {
+                try
+                {
+                    using (SqlConnection sqlcon = new SqlConnection(sqlDataSource))
+                    {
+
+                        sqlcon.Open();
+                        using (SqlCommand myCommand = new SqlCommand(Consulta, sqlcon))
+                        {
+                            myCommand.Parameters.AddWithValue("@TITULO", pelicula.Titulo);
+                            myCommand.Parameters.AddWithValue("@FECHA", pelicula.FechaCreacion);
+                            myCommand.Parameters.AddWithValue("@CALIFICACION", pelicula.Calificacion);
+                            myCommand.Parameters.AddWithValue("@IMAGEN", pelicula.imagen);
+                            MyReader = myCommand.ExecuteReader();
+                            //la tabla la cargo con los datos obtenidos de mi sentencia
+                            tb.Load(MyReader);
+                            //cierro las conexiones
+                            MyReader.Close();
+                            sqlcon.Close();
+                            resultado.InfoAdicional = "Se Agrego la Pelicula Exitosamente";
+                            return new JsonResult(resultado.InfoAdicional);
+                            
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resultado.Error = "Ocurrio un Error Inesperado";
+                    resultado.InfoAdicional = ex.ToString();
+                    return new JsonResult(resultado.Error + resultado.InfoAdicional);
+                }
             }
         }
         
