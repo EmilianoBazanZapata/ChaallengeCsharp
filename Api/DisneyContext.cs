@@ -16,6 +16,6 @@ namespace Api
         public DbSet<Personaje> Personajes {get;set;}
         public DbSet<Genero> Generos {get;set;}
         public DbSet<Pelicula> Peliculas {get;set;}
-
+        public DbSet<Usuario> Usuarios {get;set;}
     }
 }
