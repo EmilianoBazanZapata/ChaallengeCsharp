@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "4LmbLuwSdA+b6JfUQ+V+c420XuPiRswiLRG910kGORwm9O7CiY2WbJuiwLyjyfAaV+8jrgekwXbh8VJSiLjMqQ==",
+  "dgSpecHash": "LGExiV+XKxUyvPb2hiLhs8/tjI4KOkYCJH3v5uD1u6AB8FzE8T1xYa/ULPwdUis747uia3n1SJgZw7ahVsJy+Q==",
   "success": true,
   "projectFilePath": "/home/emiliano/Escritorio/Repositorio/ChallengeCsharp/Api/Api.csproj",
   "expectedPackageFiles": [
     "/home/emiliano/.nuget/packages/azure.core/1.6.0/azure.core.1.6.0.nupkg.sha512",
     "/home/emiliano/.nuget/packages/azure.identity/1.3.0/azure.identity.1.3.0.nupkg.sha512",
+    "/home/emiliano/.nuget/packages/easendmail/7.7.0.9/easendmail.7.7.0.9.nupkg.sha512",
     "/home/emiliano/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",
     "/home/emiliano/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/5.0.9/microsoft.aspnetcore.authentication.jwtbearer.5.0.9.nupkg.sha512",
     "/home/emiliano/.nuget/packages/microsoft.aspnetcore.jsonpatch/5.0.9/microsoft.aspnetcore.jsonpatch.5.0.9.nupkg.sha512",

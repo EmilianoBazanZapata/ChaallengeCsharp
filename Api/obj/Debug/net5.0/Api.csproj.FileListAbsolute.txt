@@ -63,3 +63,4 @@
 /home/emiliano/Escritorio/Repositorio/ChallengeCsharp/Api/bin/Debug/net5.0/Azure.Identity.dll
 /home/emiliano/Escritorio/Repositorio/ChallengeCsharp/Api/bin/Debug/net5.0/Microsoft.Bcl.AsyncInterfaces.dll
 /home/emiliano/Escritorio/Repositorio/ChallengeCsharp/Api/bin/Debug/net5.0/Microsoft.Identity.Client.Extensions.Msal.dll
+/home/emiliano/Escritorio/Repositorio/ChallengeCsharp/Api/bin/Debug/net5.0/EASendMail.dll

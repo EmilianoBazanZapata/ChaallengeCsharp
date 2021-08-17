@@ -5,6 +5,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using API.Comandos.ComandosPelicula;
 using Resultado;
+using EASendMail;
 
 namespace Api.Controllers
 {
@@ -67,7 +68,38 @@ namespace Api.Controllers
                                 //cierro las conexiones
                                 MyReader.Close();
                                 sqlcon.Close();
-                                resultado.InfoAdicional = "Se Registro el Usuario Exitosamente";
+
+
+                                //envio el email al administrador
+                                string email = "aca va el email del dueño";
+                                string contraseña = "aca va la contraseña del email del dueño";
+                                SmtpMail objeto_correo = new SmtpMail("TryIt");
+                                //desde donde lo envio
+                                objeto_correo.From = "Disney";
+                                //hacia donde lo envio
+                                objeto_correo.To = usuario.Email;
+                                //asunto
+                                objeto_correo.Subject = "Bienvenido a Disney : " + usuario.Email;
+                                //mensaje
+                                objeto_correo.TextBody = "si logras ver este mensaje es que pudiste registrarte con existo a nuestro sistema";
+
+                                SmtpServer objetoservidor = new SmtpServer("smtp.gmail.com");
+
+                                //mail con el que me logeo
+                                objetoservidor.User = email;
+                                objetoservidor.Password = contraseña;
+
+                                //puerto que uso
+                                objetoservidor.Port = 587;
+                                //conexion que voy a usar y la cifro
+                                objetoservidor.ConnectType = SmtpConnectType.ConnectSSLAuto;
+
+                                //poder enviar el correo
+                                SmtpClient objetocliente = new SmtpClient();
+                                objetocliente.SendMail(objetoservidor, objeto_correo);
+
+
+                                resultado.InfoAdicional = "mensaje enviado correctamente";
                                 return new JsonResult(resultado.InfoAdicional);
                             }
                         }

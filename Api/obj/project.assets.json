@@ -38,6 +38,15 @@
           "lib/netstandard2.0/Azure.Identity.dll": {}
         }
       },
+      "EASendMail/7.7.0.9": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp2.1/EASendMail.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.1/EASendMail.dll": {}
+        }
+      },
       "Humanizer.Core/2.8.26": {
         "type": "package",
         "compile": {
@@ -876,6 +885,31 @@
         "lib/netstandard2.0/Azure.Identity.dll",
         "lib/netstandard2.0/Azure.Identity.xml",
         "pkgicon.png"
+      ]
+    },
+    "EASendMail/7.7.0.9": {
+      "sha512": "R/89OVILFk+kIOAyoW4KyjE0HYchPWSvG13vqDd+i3WghjkPZ+CcYNisVDoMgc250/I552aTL10CN4o5oB4T+w==",
+      "type": "package",
+      "path": "easendmail/7.7.0.9",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "easendmail.7.7.0.9.nupkg.sha512",
+        "easendmail.nuspec",
+        "lib/net11/EASendMail.dll",
+        "lib/net20-cf/EASendMail.dll",
+        "lib/net20/EASendMail.dll",
+        "lib/net35-cf/EASendMail.dll",
+        "lib/net35/EASendMail.dll",
+        "lib/net40/EASendMail.dll",
+        "lib/net45/EASendMail.dll",
+        "lib/net461/EASendMail.dll",
+        "lib/netcoreapp2.1/EASendMail.deps.json",
+        "lib/netcoreapp2.1/EASendMail.dll",
+        "lib/portable-win81+wpa81/EASendMail.winmd",
+        "lib/uap10.0/EASendMail.winmd",
+        "tools/init.ps1"
       ]
     },
     "Humanizer.Core/2.8.26": {
@@ -2549,6 +2583,7 @@
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "EASendMail >= 7.7.0.9",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 5.0.9",
       "Microsoft.AspNetCore.Mvc.NewtonsoftJson >= 5.0.9",
       "Microsoft.Data.SqlClient >= 3.0.0",
@@ -2596,6 +2631,10 @@
       "net5.0": {
         "targetAlias": "net5.0",
         "dependencies": {
+          "EASendMail": {
+            "target": "Package",
+            "version": "[7.7.0.9, )"
+          },
           "Microsoft.AspNetCore.Authentication.JwtBearer": {
             "target": "Package",
             "version": "[5.0.9, )"
