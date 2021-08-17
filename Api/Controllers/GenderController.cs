@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Comandos.ComandosPelicula;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ namespace Api.Controllers
         }
         [HttpGet]
         [Route("Genders")]
+        [Authorize]
         public JsonResult ObtenerGeneros()
         {
             var resultado = new GenderResultado();
@@ -65,6 +67,7 @@ namespace Api.Controllers
         }
         [HttpPost]
         [Route("Gender/AddGender")]
+        [Authorize]
         public JsonResult AgregarGenero([FromBody] ComandoAgregarGenero genero)
         {
             var resultado = new CharacterResultado();
@@ -123,6 +126,7 @@ namespace Api.Controllers
         }
         [HttpPut]
         [Route("Gender/UpdateGender")]
+        [Authorize]
         public JsonResult ActualizarPersonaje([FromBody] ComandoActualizarGenero genero)
         {
             var resultado = new CharacterResultado();

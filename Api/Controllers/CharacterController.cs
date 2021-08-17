@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Resultado;
 using API.Comandos.ComandosPersonaje;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Api.Controllers
 {
@@ -24,6 +25,7 @@ namespace Api.Controllers
         }
         [HttpGet]
         [Route("Characters")]
+        [Authorize]
         public JsonResult ObtenerPersonajes()
         {
             var resultado = new CharacterResultado();
@@ -66,6 +68,7 @@ namespace Api.Controllers
         }
         [HttpPost]
         [Route("Character/AddCharacter")]
+        [Authorize]
         public JsonResult AgregarPersonaje([FromBody] ComandoAgregarPersonaje personaje)
         {
             var resultado = new CharacterResultado();
@@ -142,6 +145,7 @@ namespace Api.Controllers
         }
         [HttpPut]
         [Route("Character/UpdateCharacter")]
+        [Authorize]
         public JsonResult ActualizarPersonaje([FromBody] ComandoActualizarPersonaje personaje)
         {
             var resultado = new CharacterResultado();
@@ -214,6 +218,7 @@ namespace Api.Controllers
         }
         [HttpPut]
         [Route("Character/DeleteCharacter")]
+        [Authorize]
         public JsonResult EliminarPersonaje([FromBody] ComandoEliminarPersonaje personaje)
         {
             var resultado = new CharacterResultado();
@@ -260,6 +265,7 @@ namespace Api.Controllers
         }
         [HttpGet]
         [Route("SearchCharacterForName/characters/{name}")]
+        [Authorize]
         public JsonResult BuscarPersonajePorNombre(string name)
         {
             var resultado = new CharacterResultado();
@@ -302,6 +308,7 @@ namespace Api.Controllers
         }
         [HttpGet]
         [Route("SearchCharacterForAge/characters/{age}")]
+        [Authorize]
         public JsonResult BuscarPersonajePorEdad(int age)
         {
             var resultado = new CharacterResultado();
@@ -344,6 +351,7 @@ namespace Api.Controllers
         }
         [HttpGet]
         [Route("SearchDetail/characters/{id}")]
+        [Authorize]
         public JsonResult VerDetallePorActor(int id)
         {
             var resultado = new CharacterResultado();
@@ -386,6 +394,7 @@ namespace Api.Controllers
         }
         [HttpGet]
         [Route("SearchCharacterForMovie/characters/{IdMovie}")]
+        [Authorize]
         public JsonResult BuscarPersonajePorPelicula(int IdMovie)
         {
             var resultado = new CharacterResultado();

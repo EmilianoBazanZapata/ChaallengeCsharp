@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Comandos.ComandosPelicula;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ namespace Api.Controllers
         }
         [HttpGet]
         [Route("Movies")]
+        [Authorize]
         public JsonResult ObtenerPeliculasActivas()
         {
             var resultado = new MovieResultado();
@@ -66,6 +68,7 @@ namespace Api.Controllers
         }
         [HttpPost]
         [Route("Movie/AddMovie")]
+        [Authorize]
         public JsonResult AgregarPelicula([FromBody] ComandoAgregarPelicula pelicula)
         {
             var resultado = new CharacterResultado();
@@ -136,6 +139,7 @@ namespace Api.Controllers
         }
         [HttpPut]
         [Route("Movie/UpdateMovie")]
+        [Authorize]
         public JsonResult ActualizarPersonaje([FromBody] ComandoActualizarPelicula pelicula)
         {
             var resultado = new MovieResultado();
@@ -207,6 +211,7 @@ namespace Api.Controllers
         }
         [HttpPut]
         [Route("Movie/DeleteMovie")]
+        [Authorize]
         public JsonResult EliminarPelicula([FromBody] ComandoEliminarPelicula pelicula)
         {
             var resultado = new CharacterResultado();
@@ -253,6 +258,7 @@ namespace Api.Controllers
         }
         [HttpGet]
         [Route("SearchMovieDesc")]
+        [Authorize]
         public JsonResult OrdenarPeliculasDeFormaDescendente()
         {
             var resultado = new CharacterResultado();
@@ -295,6 +301,7 @@ namespace Api.Controllers
         }
         [HttpGet]
         [Route("SearchMovieAsc")]
+        [Authorize]
         public JsonResult OrdenarPeliculasDeFormaAscendente()
         {
             var resultado = new CharacterResultado();
@@ -337,6 +344,7 @@ namespace Api.Controllers
         }
         [HttpPost]
         [Route("Movie/AddMovieAndCharacter")]
+        [Authorize]
         public JsonResult RelacionarPeliculayActores([FromBody] ComandoRelacionarPeliculayActores comando)
         {
             var resultado = new CharacterResultado();
@@ -384,6 +392,7 @@ namespace Api.Controllers
         }
         [HttpGet]
         [Route("SearchCharacterForMovie/Movie/{IdMovie}")]
+        [Authorize]
         public JsonResult BuscarPersonajePorPelicula(int IdMovie)
         {
             var resultado = new CharacterResultado();
