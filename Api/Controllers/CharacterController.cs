@@ -10,6 +10,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Resultado;
+using API.Comandos.ComandosPersonaje;
 
 namespace Api.Controllers
 {
@@ -63,6 +64,5 @@ namespace Api.Controllers
                 return new JsonResult(resultado.Error + resultado.InfoAdicional);
             }
         }
-        
     }
 }

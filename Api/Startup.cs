@@ -34,6 +34,16 @@ namespace Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" });
             });
+            //activo cors
+            services.AddCors(c=>{
+                c.AddPolicy("AllowOrigin",options => options.AllowAnyOrigin().AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
+
+            //JSON serializer
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore).AddNewtonsoftJson
+            (options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+        
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
