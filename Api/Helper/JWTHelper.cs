@@ -15,7 +15,7 @@ namespace Api.Helper
             this.Secret = Encoding.ASCII.GetBytes(@SecretKey);
         }
 
-        public string CreateToken(string@username)
+        public string CreateToken(string @username)
         {
             var claims = new ClaimsIdentity();
             claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, @username));
