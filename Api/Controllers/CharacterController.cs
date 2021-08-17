@@ -212,6 +212,52 @@ namespace Api.Controllers
                 }
             }
         }
+        [HttpPut]
+        [Route("Character/DeleteCharacter")]
+        public JsonResult EliminarPersonaje([FromBody] ComandoEliminarPersonaje personaje)
+        {
+            var resultado = new CharacterResultado();
+            //genero un string con la consulta hacia la BD
+            string Consulta = @"EXEC UP_ELIMINAR_PERSONAJE @ID";
+            //CREO UNA INSTANCIA NUEVA DE UN DATATABLE
+            DataTable tb = new DataTable();
+            //creo una variable reader para capturar los datos
+            SqlDataReader MyReader;
+            //TOMO LA CADENA CONEXXION QUE SE UBICA EN APPSETINGS.JSON
+            //string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
+            //TOMO LA CADENA CONEXXION QUE SE UBICA EN APPSETINGS.JSON
+            string sqlDataSource = _configuration.GetConnectionString("BD");
+
+
+            try
+            {
+                using (SqlConnection sqlcon = new SqlConnection(sqlDataSource))
+                {
+
+                    sqlcon.Open();
+                        using (SqlCommand myCommand = new SqlCommand(Consulta, sqlcon))
+                        {
+                            myCommand.Parameters.AddWithValue("@ID", personaje.Id);
+                            MyReader = myCommand.ExecuteReader();
+                            //la tabla la cargo con los datos obtenidos de mi sentencia
+                            tb.Load(MyReader);
+                            //cierro las conexiones
+                            MyReader.Close();
+                            sqlcon.Close();
+                            resultado.InfoAdicional = "Se Elimino Exitosamente el Personaje";
+                            return new JsonResult(resultado.InfoAdicional);
+                            
+                        }
+                    }
+                }
+            catch (Exception ex)
+            {
+                resultado.Error = "Ocurrio un Error Inesperado";
+                resultado.InfoAdicional = ex.ToString();
+                return new JsonResult(resultado.Error + resultado.InfoAdicional);
+            }
+            
+        }
         
     }
 }
