@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Comandos.ComandosPelicula;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -60,6 +61,64 @@ namespace Api.Controllers
                 resultado.Error = "Ocurrio un Error Inesperado";
                 resultado.InfoAdicional = ex.ToString();
                 return new JsonResult(resultado.Error + resultado.InfoAdicional);
+            }
+        }
+        [HttpPost]
+        [Route("Gender/AddGender")]
+        public JsonResult AgregarGenero([FromBody] ComandoAgregarGenero genero)
+        {
+            var resultado = new CharacterResultado();
+            //genero un string con la consulta hacia la BD
+                                                          
+
+            string Consulta = @"EXEC UP_AGREGAR_GENERO @NOMBRE,@IMAGEN";
+            //CREO UNA INSTANCIA NUEVA DE UN DATATABLE
+            DataTable tb = new DataTable();
+            //creo una variable reader para capturar los datos
+            SqlDataReader MyReader;
+            //TOMO LA CADENA CONEXXION QUE SE UBICA EN APPSETINGS.JSON
+            string sqlDataSource = _configuration.GetConnectionString("BD");
+
+            if (genero.Titulo.Equals(""))
+            {
+                resultado.Error = "Debe Ingresar un Genero";
+                return new JsonResult(resultado.Error);
+            }
+            if (genero.imagen.Equals(""))
+            {
+                resultado.Error = "Debe Ingresar una Imagen";
+                return new JsonResult(resultado.Error);
+            }
+            else
+            {
+                try
+                {
+                    using (SqlConnection sqlcon = new SqlConnection(sqlDataSource))
+                    {
+
+                        sqlcon.Open();
+                        using (SqlCommand myCommand = new SqlCommand(Consulta, sqlcon))
+                        {
+                            myCommand.Parameters.AddWithValue("@NOMBRE", genero.Titulo);
+                            myCommand.Parameters.AddWithValue("@IMAGEN", genero.imagen);
+                            MyReader = myCommand.ExecuteReader();
+                            //la tabla la cargo con los datos obtenidos de mi sentencia
+                            tb.Load(MyReader);
+                            //cierro las conexiones
+                            MyReader.Close();
+                            sqlcon.Close();
+                            resultado.InfoAdicional = "Se Agrego el Genero Exitosamente";
+                            return new JsonResult(resultado.InfoAdicional);
+                            
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resultado.Error = "Ocurrio un Error Inesperado";
+                    resultado.InfoAdicional = ex.ToString();
+                    return new JsonResult(resultado.Error + resultado.InfoAdicional);
+                }
             }
         }
         
