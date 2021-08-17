@@ -64,5 +64,83 @@ namespace Api.Controllers
                 return new JsonResult(resultado.Error + resultado.InfoAdicional);
             }
         }
+    
+        [HttpPost]
+        [Route("Character/AddCharacter")]
+        public JsonResult AgregarPersonaje([FromBody] ComandoAgregarPersonaje personaje)
+        {
+            var resultado = new CharacterResultado();
+            //genero un string con la consulta hacia la BD
+                                                          
+
+            string Consulta = @"EXEC UP_AGREGAR_PERSONAJE @NOMBRE, @EDAD, @PESO, @HISTORIA ,@IMAGEN";
+            //CREO UNA INSTANCIA NUEVA DE UN DATATABLE
+            DataTable tb = new DataTable();
+            //creo una variable reader para capturar los datos
+            SqlDataReader MyReader;
+            //TOMO LA CADENA CONEXXION QUE SE UBICA EN APPSETINGS.JSON
+            string sqlDataSource = _configuration.GetConnectionString("BD");
+
+            if (personaje.Nombre.Equals(""))
+            {
+                resultado.Error = "Debe Ingreesar un Nombre";
+                return new JsonResult(resultado.Error);
+            }
+            if (personaje.Edad.Equals(""))
+            {
+                resultado.Error = "Debe Ingreesar una Edad";
+                return new JsonResult(resultado.Error);
+            }
+            if (personaje.Peso.Equals(""))
+            {
+                resultado.Error = "Debe Ingreesar un Peso";
+                return new JsonResult(resultado.Error);
+            }
+            if (personaje.Historia.Equals(""))
+            {
+                resultado.Error = "Debe Ingreesar una Historia";
+                return new JsonResult(resultado.Error);
+            }
+            if (personaje.Imagen.Equals(""))
+            {
+                resultado.Error = "Debe Ingreesar una Imagen";
+                return new JsonResult(resultado.Error);
+            }
+            else
+            {
+                try
+                {
+                    using (SqlConnection sqlcon = new SqlConnection(sqlDataSource))
+                    {
+
+                        sqlcon.Open();
+                        using (SqlCommand myCommand = new SqlCommand(Consulta, sqlcon))
+                        {
+                            myCommand.Parameters.AddWithValue("@NOMBRE", personaje.Nombre);
+                            myCommand.Parameters.AddWithValue("@EDAD", personaje.Edad);
+                            myCommand.Parameters.AddWithValue("@PESO", personaje.Peso);
+                            myCommand.Parameters.AddWithValue("@HISTORIA", personaje.Historia);
+                            myCommand.Parameters.AddWithValue("@IMAGEN", personaje.Imagen);
+                            MyReader = myCommand.ExecuteReader();
+                            //la tabla la cargo con los datos obtenidos de mi sentencia
+                            tb.Load(MyReader);
+                            //cierro las conexiones
+                            MyReader.Close();
+                            sqlcon.Close();
+                            resultado.InfoAdicional = "Se Agrego el personaje Exitosamente";
+                            return new JsonResult(resultado.InfoAdicional);
+                            
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resultado.Error = "Ocurrio un Error Inesperado";
+                    resultado.InfoAdicional = ex.ToString();
+                    return new JsonResult(resultado.Error + resultado.InfoAdicional);
+                }
+            }
+        }
+        
     }
 }
