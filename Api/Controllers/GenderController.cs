@@ -121,6 +121,65 @@ namespace Api.Controllers
                 }
             }
         }
+        [HttpPut]
+        [Route("Gender/UpdateGender")]
+        public JsonResult ActualizarPersonaje([FromBody] ComandoActualizarGenero genero)
+        {
+            var resultado = new CharacterResultado();
+            //genero un string con la consulta hacia la BD
+            string Consulta = @"EXEC UP_ACTUALIZAR_GENERO @GENERO,@IMAGEN , @ID";
+            //CREO UNA INSTANCIA NUEVA DE UN DATATABLE
+            DataTable tb = new DataTable();
+            //creo una variable reader para capturar los datos
+            SqlDataReader MyReader;
+            //TOMO LA CADENA CONEXXION QUE SE UBICA EN APPSETINGS.JSON
+            //string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
+            //TOMO LA CADENA CONEXXION QUE SE UBICA EN APPSETINGS.JSON
+            string sqlDataSource = _configuration.GetConnectionString("BD");
+
+            if (genero.Titulo.Equals(""))
+            {
+                resultado.Error = "Debe Ingreesar un Nombre";
+                return new JsonResult(resultado.Error);
+            }
+            if (genero.imagen.Equals(""))
+            {
+                resultado.Error = "Debe Ingreesar una Imagen";
+                return new JsonResult(resultado.Error);
+            }
+            else
+            {
+                try
+                {
+                    using (SqlConnection sqlcon = new SqlConnection(sqlDataSource))
+                    {
+
+                        sqlcon.Open();
+                        using (SqlCommand myCommand = new SqlCommand(Consulta, sqlcon))
+                        {
+                            myCommand.Parameters.AddWithValue("@GENERO", genero.Titulo);
+                            myCommand.Parameters.AddWithValue("@IMAGEN", genero.imagen);
+                            myCommand.Parameters.AddWithValue("@ID", genero.Id);
+                            MyReader = myCommand.ExecuteReader();
+                            //la tabla la cargo con los datos obtenidos de mi sentencia
+                            tb.Load(MyReader);
+                            //cierro las conexiones
+                            MyReader.Close();
+                            sqlcon.Close();
+                            resultado.InfoAdicional = "El Genero se Actualizo Exitosamente";
+                            return new JsonResult(resultado.InfoAdicional);
+                            
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resultado.Error = "Ocurrio un Error Inesperado";
+                    resultado.InfoAdicional = ex.ToString();
+                    return new JsonResult(resultado.Error + resultado.InfoAdicional);
+                }
+            }
+        }
         
     }
 }
