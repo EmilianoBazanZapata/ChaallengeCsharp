@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1cZH972ZwB54q2Z8obxEkR0x+RJOelAt8DFLfV1Sk8PM+0S/tm9g6RQ6EjTqQyfj4tx5lskw0F8febk8MoezIg==",
+  "dgSpecHash": "4oR2r/EeJjz4gaEJQ+7LtLFqW1jIJrdYhY3CEtuEVlqQo3n4yLdu7evVYqeesgq8VyyDRjsAcjrr9Ec3vLUK1g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Emiliano\\Desktop\\Challenge Disney\\Api\\Api.csproj",
+  "projectFilePath": "C:\\Users\\Emiliano\\Desktop\\ChallengeViejo\\ChallengeCsharp\\NuevaVersion\\Challenge Disney\\Api\\Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Emiliano\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Emiliano\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
