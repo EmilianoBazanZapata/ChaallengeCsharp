@@ -21,7 +21,7 @@ namespace Api.Controllers
         public async Task<IActionResult> GetGeneros()
         {
             //ordeno los generos por nombre
-            var lista = await _db.Generos.OrderBy(p => p.Nombre).ToListAsync();
+            var lista = await _db.Generos.Where(p => p.Activo == true).OrderBy(p => p.Nombre).ToListAsync();
             return Ok(lista);
         }
         [HttpPost]
@@ -85,6 +85,29 @@ namespace Api.Controllers
             }
             //una vez encontrado el genero lo elimino
             query.Activo = false;
+            //guardo los cambios
+            await _db.SaveChangesAsync();
+            return Ok();
+
+        }
+        [HttpPut]
+        [Route("Gender/ReactivateGender")]
+        public async Task<IActionResult> ReactivarGenero(int id)
+        {
+            //selecciono el genero que tenga el mismo id
+            var query = (from Gen in _db.Generos
+                         where Gen.Id == id
+                         select Gen).FirstOrDefault();
+            if(query == null)
+            {
+                return NotFound();
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            //una vez encontrado el genero lo elimino
+            query.Activo = true;
             //guardo los cambios
             await _db.SaveChangesAsync();
             return Ok();
