@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Data;
@@ -89,6 +90,49 @@ namespace Api.Controllers
             //guardo los cambios
             await _db.SaveChangesAsync();
             return Ok();
+        }
+        [HttpPut]
+        [Route("Movie/ReactivateMovie")]
+        public async Task<IActionResult> ReactivarPelicula(int id)
+        {
+            //selecciono la pelicula que tenga el mismo id
+            var query = (from Pel in _db.Peliculas
+                         where Pel.Id == id
+                         select Pel).FirstOrDefault();
+            if(query == null)
+            {
+                return NotFound();
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            //una vez encontrado alcualizo los datos que deseo
+            query.Activo = true;
+            //guardo los cambios
+            await _db.SaveChangesAsync();
+            return Ok();
+        }
+        [HttpPost]
+        [Route("Movie/SaveFileMovie")]
+        public JsonResult SaveFileLogo()
+        {
+            try
+            {
+                var HttpRequest = Request.Form;
+                var PostedFile = HttpRequest.Files[0];
+                string FileName = PostedFile.FileName;
+                var PhysicalPath = "wwwroot/Peliculas/" + FileName;
+                using (var stream = new FileStream(PhysicalPath, FileMode.Create))
+                {
+                    PostedFile.CopyTo(stream);
+                }
+                return new JsonResult(FileName);
+            }
+            catch (Exception)
+            {
+                return new JsonResult("Anonymous.png");
+            }
         }
     }
 }
