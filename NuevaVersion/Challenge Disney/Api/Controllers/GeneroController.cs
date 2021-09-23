@@ -24,6 +24,24 @@ namespace Api.Controllers
             var lista = await _db.Generos.OrderBy(p => p.Nombre).ToListAsync();
             return Ok(lista);
         }
-        
+        [HttpPost]
+        [Route("Gender/AddGender")]
+        public async Task<IActionResult> AgregarGenero([FromBody] Genero genero)
+        {
+            //diferentes validaciones
+            if (genero == null)
+            {
+                return BadRequest(ModelState);
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            //si todo sale bien podre agregar un genero
+            await _db.AddAsync(genero);
+            //por ultimo gurado los cambios
+            await _db.SaveChangesAsync();
+            return Ok();
+        }
     }
 }

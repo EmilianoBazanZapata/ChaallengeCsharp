@@ -11,8 +11,7 @@ namespace Api.Models
         [Key]
         public int Id{get;set;}
         [Required]
-        public string Nombre{get;set;}    
-        public string imagen {get;set;}   
+        public string Nombre{get;set;}       
         [Required] 
         public Boolean Activo{get;set;}    
         public virtual ICollection<Pelicula> Peliculas {get;set;}
