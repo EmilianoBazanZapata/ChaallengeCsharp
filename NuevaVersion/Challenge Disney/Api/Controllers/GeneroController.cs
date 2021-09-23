@@ -43,5 +43,29 @@ namespace Api.Controllers
             await _db.SaveChangesAsync();
             return Ok();
         }
+        [HttpPut]
+        [Route("Gender/UpdateGender")]
+        public async Task<IActionResult> ActualizarGenero([FromBody] Genero genero)
+        {
+            //selecciono el genero que tenga el mismo id
+            var query = (from Gen in _db.Generos
+                         where Gen.Id == genero.Id
+                         select Gen).FirstOrDefault();
+            if(query == null)
+            {
+                return NotFound();
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            //una vez encontrado alcualizo los datos que deseo
+            query.Nombre = genero.Nombre;
+            query.Activo = genero.Activo;
+            //guardo los cambios
+            await _db.SaveChangesAsync();
+            return Ok();
+
+        }
     }
 }
