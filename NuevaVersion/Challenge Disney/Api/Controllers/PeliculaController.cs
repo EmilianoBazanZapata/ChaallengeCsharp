@@ -18,11 +18,27 @@ namespace Api.Controllers
             _db = db;
         }
         [HttpGet]
-        [Route("Movies")]
+        [Route("Movies/ListMovies")]
         public async Task<IActionResult> GetPeliculas()
         {
             //ordeno las Peliculas por nombre
             var lista = await _db.Peliculas.Where(p => p.Activo == true).OrderBy(p => p.Titulo).ToListAsync();
+            return Ok(lista);
+        }
+        [HttpGet]
+        [Route("Movies/ListMoviesDesc")]
+        public async Task<IActionResult> GetPeliculasDesc()
+        {
+            //ordeno las Peliculas por nombre
+            var lista = await _db.Peliculas.Where(p => p.Activo == true).OrderByDescending(p => p.Id).ToListAsync();
+            return Ok(lista);
+        }
+        [HttpGet]
+        [Route("Movies/ListMoviesAsc")]
+        public async Task<IActionResult> GetPeliculasAsc()
+        {
+            //ordeno las Peliculas por nombre
+            var lista = await _db.Peliculas.Where(p => p.Activo == true).OrderBy(p => p.Id).ToListAsync();
             return Ok(lista);
         }
         [HttpPost]
@@ -52,7 +68,7 @@ namespace Api.Controllers
             var query = (from Pel in _db.Peliculas
                          where Pel.Id == pelicula.Id
                          select Pel).FirstOrDefault();
-            if(query == null)
+            if (query == null)
             {
                 return NotFound();
             }
@@ -77,7 +93,7 @@ namespace Api.Controllers
             var query = (from Pel in _db.Peliculas
                          where Pel.Id == id
                          select Pel).FirstOrDefault();
-            if(query == null)
+            if (query == null)
             {
                 return NotFound();
             }
@@ -99,7 +115,7 @@ namespace Api.Controllers
             var query = (from Pel in _db.Peliculas
                          where Pel.Id == id
                          select Pel).FirstOrDefault();
-            if(query == null)
+            if (query == null)
             {
                 return NotFound();
             }
