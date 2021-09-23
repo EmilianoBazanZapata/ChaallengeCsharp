@@ -67,5 +67,28 @@ namespace Api.Controllers
             return Ok();
 
         }
+        [HttpPut]
+        [Route("Gender/DeleteGender")]
+        public async Task<IActionResult> EliminarGenero(int id)
+        {
+            //selecciono el genero que tenga el mismo id
+            var query = (from Gen in _db.Generos
+                         where Gen.Id == id
+                         select Gen).FirstOrDefault();
+            if(query == null)
+            {
+                return NotFound();
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            //una vez encontrado el genero lo elimino
+            query.Activo = false;
+            //guardo los cambios
+            await _db.SaveChangesAsync();
+            return Ok();
+
+        }
     }
 }
