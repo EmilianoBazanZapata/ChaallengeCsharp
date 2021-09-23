@@ -41,6 +41,15 @@ namespace Api.Controllers
             var lista = await _db.Peliculas.Where(p => p.Activo == true).OrderBy(p => p.Id).ToListAsync();
             return Ok(lista);
         }
+        [HttpGet]
+        [Route("Movies/SearchMovieGender")]
+        public async Task<IActionResult> GetPeliculaPorGenero(int Genero)
+        {
+
+            var lista = await _db.Peliculas.Where(p => p.Activo == true && p.IdGenero == Genero).OrderBy(p => p.Id).ToListAsync();
+            return Ok(lista);
+        }
+        
         [HttpPost]
         [Route("Movie/AddMovie")]
         public async Task<IActionResult> AgregarPelicula([FromBody] Pelicula pelicula)

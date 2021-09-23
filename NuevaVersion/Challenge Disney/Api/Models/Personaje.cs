@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 namespace Api.Models
@@ -20,7 +21,7 @@ namespace Api.Models
         public string imagen {get;set;}
         [Required]
         public Boolean Activo{get;set;}
-
         public virtual ICollection<Pelicula> Peliculas {get;set;}
+
     }
 }

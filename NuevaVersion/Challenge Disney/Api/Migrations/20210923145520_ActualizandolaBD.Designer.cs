@@ -4,14 +4,16 @@ using Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Api.Migrations
 {
     [DbContext(typeof(DisneyContext))]
-    partial class DisneyContextModelSnapshot : ModelSnapshot
+    [Migration("20210923145520_ActualizandolaBD")]
+    partial class ActualizandolaBD
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,7 +61,7 @@ namespace Api.Migrations
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdGenero")
+                    b.Property<int?>("GeneroId")
                         .HasColumnType("int");
 
                     b.Property<string>("Titulo")
@@ -71,6 +73,8 @@ namespace Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GeneroId");
 
                     b.ToTable("Peliculas");
                 });
@@ -91,6 +95,9 @@ namespace Api.Migrations
                     b.Property<string>("Historia")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdGenero")
+                        .HasColumnType("int");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -144,9 +151,16 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Api.Models.Genero", b =>
                 {
-                    b.HasOne("Api.Models.Pelicula", null)
+                    b.HasOne("Api.Models.Personaje", null)
                         .WithMany("Generos")
                         .HasForeignKey("IdGenero");
+                });
+
+            modelBuilder.Entity("Api.Models.Pelicula", b =>
+                {
+                    b.HasOne("Api.Models.Genero", null)
+                        .WithMany("Peliculas")
+                        .HasForeignKey("GeneroId");
                 });
 
             modelBuilder.Entity("PeliculaPersonaje", b =>
@@ -164,7 +178,12 @@ namespace Api.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Api.Models.Pelicula", b =>
+            modelBuilder.Entity("Api.Models.Genero", b =>
+                {
+                    b.Navigation("Peliculas");
+                });
+
+            modelBuilder.Entity("Api.Models.Personaje", b =>
                 {
                     b.Navigation("Generos");
                 });
