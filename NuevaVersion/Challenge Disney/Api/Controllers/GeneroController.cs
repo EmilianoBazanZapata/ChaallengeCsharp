@@ -61,7 +61,6 @@ namespace Api.Controllers
             }
             //una vez encontrado alcualizo los datos que deseo
             query.Nombre = genero.Nombre;
-            query.Activo = genero.Activo;
             //guardo los cambios
             await _db.SaveChangesAsync();
             return Ok();
