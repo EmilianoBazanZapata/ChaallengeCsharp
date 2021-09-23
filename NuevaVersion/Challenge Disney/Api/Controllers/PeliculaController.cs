@@ -68,5 +68,27 @@ namespace Api.Controllers
             await _db.SaveChangesAsync();
             return Ok();
         }
+        [HttpPut]
+        [Route("Movie/DeleteMovie")]
+        public async Task<IActionResult> EliminarPelicula(int id)
+        {
+            //selecciono la pelicula que tenga el mismo id
+            var query = (from Pel in _db.Peliculas
+                         where Pel.Id == id
+                         select Pel).FirstOrDefault();
+            if(query == null)
+            {
+                return NotFound();
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            //una vez encontrado alcualizo los datos que deseo
+            query.Activo = false;
+            //guardo los cambios
+            await _db.SaveChangesAsync();
+            return Ok();
+        }
     }
 }
