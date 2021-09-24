@@ -120,3 +120,4 @@ C:\Users\Emiliano\Desktop\ChallengeViejo\ChallengeCsharp\NuevaVersion\Challenge 
 C:\Users\Emiliano\Desktop\ChallengeViejo\ChallengeCsharp\NuevaVersion\Challenge Disney\Api\obj\Debug\net5.0\ref\Api.dll
 C:\Users\Emiliano\Desktop\ChallengeViejo\ChallengeCsharp\NuevaVersion\Challenge Disney\Api\obj\Debug\net5.0\Api.pdb
 C:\Users\Emiliano\Desktop\ChallengeViejo\ChallengeCsharp\NuevaVersion\Challenge Disney\Api\obj\Debug\net5.0\Api.genruntimeconfig.cache
+C:\Users\Emiliano\Desktop\ChallengeViejo\ChallengeCsharp\NuevaVersion\Challenge Disney\Api\bin\Debug\net5.0\EASendMail.dll

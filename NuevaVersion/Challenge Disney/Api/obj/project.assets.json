@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     "net5.0": {
+      "EASendMail/7.7.1.1": {
+        "type": "package",
+        "compile": {
+          "lib/net5.0/EASendMail.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/EASendMail.dll": {}
+        }
+      },
       "Humanizer.Core/2.8.26": {
         "type": "package",
         "compile": {
@@ -1597,6 +1606,35 @@
     }
   },
   "libraries": {
+    "EASendMail/7.7.1.1": {
+      "sha512": "olYxxFDRAwDrP62Z13OzO3hxlYp3l36mlbT6pGpmuu8+efExVF/3+rAN9vsyNeNtXG8LH7nt1KM4+Im1FjXlQQ==",
+      "type": "package",
+      "path": "easendmail/7.7.1.1",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "easendmail.7.7.1.1.nupkg.sha512",
+        "easendmail.nuspec",
+        "lib/net11/EASendMail.dll",
+        "lib/net20-cf/EASendMail.dll",
+        "lib/net20/EASendMail.dll",
+        "lib/net35-cf/EASendMail.dll",
+        "lib/net35/EASendMail.dll",
+        "lib/net40/EASendMail.dll",
+        "lib/net45/EASendMail.dll",
+        "lib/net461/EASendMail.dll",
+        "lib/net5.0/EASendMail.deps.json",
+        "lib/net5.0/EASendMail.dll",
+        "lib/netcoreapp2.1/EASendMail.deps.json",
+        "lib/netcoreapp2.1/EASendMail.dll",
+        "lib/netstandard2.0/EASendMail.deps.json",
+        "lib/netstandard2.0/EASendMail.dll",
+        "lib/portable-win81+wpa81/EASendMail.winmd",
+        "lib/uap10.0/EASendMail.winmd",
+        "tools/init.ps1"
+      ]
+    },
     "Humanizer.Core/2.8.26": {
       "sha512": "OiKusGL20vby4uDEswj2IgkdchC1yQ6rwbIkZDVBPIR6al2b7n3pC91elBul9q33KaBgRKhbZH3+2Ur4fnWx2A==",
       "type": "package",
@@ -5972,6 +6010,7 @@
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "EASendMail >= 7.7.1.1",
       "Microsoft.EntityFrameworkCore >= 5.0.10",
       "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.10",
       "Microsoft.EntityFrameworkCore.Tools >= 5.0.10",
@@ -6017,6 +6056,10 @@
       "net5.0": {
         "targetAlias": "net5.0",
         "dependencies": {
+          "EASendMail": {
+            "target": "Package",
+            "version": "[7.7.1.1, )"
+          },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",
             "version": "[5.0.10, )"
