@@ -26,13 +26,20 @@ namespace Api.Controllers
         }
         [HttpGet]
         [Route("Characters/SearchCharacterForName")]
-        public async Task<IActionResult> GetCharacters(string Nombre)
+        public async Task<IActionResult> GetCharactersForName(string Nombre)
         {
             //ordeno los personajes por nombre
             var lista = await _db.Personajes.Where(p => p.Activo == true && p.Nombre == Nombre).OrderBy(p => p.Nombre).ToListAsync();
             return Ok(lista);
         }
-        
+        [HttpGet]
+        [Route("Characters/SearchCharacterForAge")]
+        public async Task<IActionResult> GetCharactersForAge(int Edad)
+        {
+            //ordeno los personajes por nombre
+            var lista = await _db.Personajes.Where(p => p.Activo == true && p.Edad == Edad).OrderBy(p => p.Nombre).ToListAsync();
+            return Ok(lista);
+        }
         [HttpPost]
         [Route("Characters/AddCharacter")]
         public async Task<IActionResult> AgregarPelicula([FromBody] Personaje personaje)
