@@ -7,16 +7,21 @@ using Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EASendMail;
+using Api.Helper;
+using Microsoft.Extensions.Configuration;
 
 namespace Api.Controllers
 {
     public class LoginController : ControllerBase
     {
         private readonly DisneyContext _db;
-        public LoginController(DisneyContext db)
+        private readonly IConfiguration _configuration;
+        public LoginController(DisneyContext db, IConfiguration configuration)
         {
             _db = db;
+            _configuration = configuration;
         }
+
         [HttpPost]
         [Route("Users/AddUser")]
         public async Task<IActionResult> AgregarUsuario([FromBody] Usuario usuario)
@@ -65,6 +70,23 @@ namespace Api.Controllers
 
             return Ok();
         }
-
+        [HttpPost]
+        [Route("User/LoginUser")]
+        public async Task<IActionResult> IngresarAlSistema([FromBody] Usuario usuario)
+        {
+            /*var query = (from U in _db.Usuarios
+                         where U.Email == usuario.Email &&
+                         U.Password == usuario.Password
+                         select U.Email);*/
+            var obj = await _db.Usuarios.FirstOrDefaultAsync(c => c.Email == usuario.Email && c.Password == usuario.Password);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            string secret = this._configuration.GetValue<string>("Secret");
+            var JwtHelper = new JWTHelper(secret);
+            var Token = JwtHelper.CreateToken(usuario.Email);
+            return Ok(new { Ok = true, msg = "Logeado con Exito", Token });
+        }
     }
 }
