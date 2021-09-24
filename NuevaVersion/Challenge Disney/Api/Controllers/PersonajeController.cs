@@ -18,10 +18,11 @@ namespace Api.Controllers
             _db = db;
         }
         [HttpGet]
-        [Route("Characters/ListCharacters")]
+        [Route("Characters/Characters")]
         public async Task<IActionResult> GetCharacters()
         {
             var query = (from Pel in _db.Personajes
+                         where Pel.Activo == true 
                          select new { Pel.Nombre, Pel.imagen });
             var lista = await query.ToListAsync();
             return Ok(lista);
@@ -57,7 +58,7 @@ namespace Api.Controllers
         }
         [HttpPost]
         [Route("Characters/AddCharacter")]
-        public async Task<IActionResult> AgregarPelicula([FromBody] Personaje personaje)
+        public async Task<IActionResult> AddCharacter([FromBody] Personaje personaje)
         {
             //diferentes validaciones
             if (personaje == null)
@@ -74,8 +75,32 @@ namespace Api.Controllers
             await _db.SaveChangesAsync();
             return Ok();
         }
+        [HttpPut]
+        [Route("Character/DeleteCharacter")]
+        public async Task<IActionResult> DeleteCharacter(int id)
+        {
+            //selecciono la pelicula que tenga el mismo id
+            var query = (from Per in _db.Personajes
+                         where Per.Id == id
+                         select Per).FirstOrDefault();
+            if (query == null)
+            {
+                return NotFound();
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            //una vez encontrado alcualizo los datos que deseo
+            query.Activo = false;
+            //guardo los cambios
+            await _db.SaveChangesAsync();
+            return Ok();
+        }
+        
 
-        public JsonResult SaveFileLogo()
+
+        public JsonResult SaveFile()
         {
             try
             {

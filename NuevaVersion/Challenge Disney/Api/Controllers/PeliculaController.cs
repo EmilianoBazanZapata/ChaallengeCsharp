@@ -31,7 +31,7 @@ namespace Api.Controllers
         public async Task<IActionResult> GetPeliculasDesc()
         {
             //ordeno las Peliculas por nombre
-            var lista = await _db.Peliculas.Where(p => p.Activo == true).OrderByDescending(p => p.Id).ToListAsync();
+            var lista = await _db.Peliculas.Where(p => p.Activo == true).OrderByDescending(p => p.FechaCreacion).ToListAsync();
             return Ok(lista);
         }
         [HttpGet]
@@ -39,7 +39,7 @@ namespace Api.Controllers
         public async Task<IActionResult> GetPeliculasAsc()
         {
             //ordeno las Peliculas por nombre
-            var lista = await _db.Peliculas.Where(p => p.Activo == true).OrderBy(p => p.Id).ToListAsync();
+            var lista = await _db.Peliculas.Where(p => p.Activo == true).OrderBy(p => p.FechaCreacion).ToListAsync();
             return Ok(lista);
         }
         [HttpGet]
@@ -140,7 +140,7 @@ namespace Api.Controllers
         }
         [HttpPost]
         [Route("Movie/SaveFileMovie")]
-        public JsonResult SaveFileLogo()
+        public JsonResult SaveFile()
         {
             try
             {
