@@ -51,6 +51,14 @@ namespace Api
             ),
                 RequestPath = "/Peliculas"
             });
+            app.UseDirectoryBrowser(new DirectoryBrowserOptions
+            {
+                FileProvider = new PhysicalFileProvider
+            (
+                Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Personajes")
+            ),
+                RequestPath = "/Personajes"
+            });
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

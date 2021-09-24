@@ -22,25 +22,25 @@ namespace Api.Controllers
         public async Task<IActionResult> GetPeliculas()
         {
             var query = (from Pel in _db.Peliculas
-                        select new {Pel.Titulo , Pel.imagen});
+                         select new { Pel.Titulo, Pel.imagen });
             var lista = await query.ToListAsync();
             return Ok(lista);
         }
         [HttpGet]
-        [Route("Movies/ListMoviesDesc")]
-        public async Task<IActionResult> GetPeliculasDesc()
+        [Route("Movies/ListMoviesOrder")]
+        public async Task<IActionResult> GetPeliculasDesc(string Orden)
         {
-            //ordeno las Peliculas por nombre
-            var lista = await _db.Peliculas.Where(p => p.Activo == true).OrderByDescending(p => p.FechaCreacion).ToListAsync();
+            var lista = new List<Pelicula>();
+            if (Orden == "asc")
+            {
+                lista = await _db.Peliculas.Where(p => p.Activo == true).OrderBy(p => p.FechaCreacion).ToListAsync();
+            }
+            else if (Orden == "desc")
+            {
+                lista = await _db.Peliculas.Where(p => p.Activo == true).OrderByDescending(p => p.FechaCreacion).ToListAsync();
+            }
             return Ok(lista);
-        }
-        [HttpGet]
-        [Route("Movies/ListMoviesAsc")]
-        public async Task<IActionResult> GetPeliculasAsc()
-        {
-            //ordeno las Peliculas por nombre
-            var lista = await _db.Peliculas.Where(p => p.Activo == true).OrderBy(p => p.FechaCreacion).ToListAsync();
-            return Ok(lista);
+
         }
         [HttpGet]
         [Route("Movies/SearchMovieGender")]
@@ -49,7 +49,7 @@ namespace Api.Controllers
 
             var lista = await _db.Peliculas.Where(p => p.Activo == true && p.IdGenero == Genero).OrderBy(p => p.Id).ToListAsync();
             return Ok(lista);
-        }  
+        }
         [HttpPost]
         [Route("Movie/AddMovie")]
         public async Task<IActionResult> AgregarPelicula([FromBody] Pelicula pelicula)
@@ -116,6 +116,29 @@ namespace Api.Controllers
             await _db.SaveChangesAsync();
             return Ok();
         }
+        [HttpPut]
+        [Route("Movie/DeleteMovie2")]
+        public async Task<IActionResult> EliminarPelicula2(int id)
+        {
+            //selecciono la pelicula que tenga el mismo id
+            var query = (from Pel in _db.Peliculas
+                         where Pel.Id == id
+                         select Pel).FirstOrDefault();
+            if (query == null)
+            {
+                return NotFound();
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            //una vez encontrado alcualizo los datos que deseo
+            query.Activo = false;
+            //guardo los cambios
+            await _db.SaveChangesAsync();
+            return Ok();
+        }
+        
         [HttpPut]
         [Route("Movie/ReactivateMovie")]
         public async Task<IActionResult> ReactivarPelicula(int id)
