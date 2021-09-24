@@ -18,11 +18,12 @@ namespace Api.Controllers
             _db = db;
         }
         [HttpGet]
-        [Route("Movies/ListMovies")]
+        [Route("Movies/Movies")]
         public async Task<IActionResult> GetPeliculas()
         {
-            //ordeno las Peliculas por nombre
-            var lista = await _db.Peliculas.Where(p => p.Activo == true).OrderBy(p => p.Titulo).ToListAsync();
+            var query = (from Pel in _db.Peliculas
+                        select new {Pel.Titulo , Pel.imagen});
+            var lista = await query.ToListAsync();
             return Ok(lista);
         }
         [HttpGet]
@@ -48,8 +49,7 @@ namespace Api.Controllers
 
             var lista = await _db.Peliculas.Where(p => p.Activo == true && p.IdGenero == Genero).OrderBy(p => p.Id).ToListAsync();
             return Ok(lista);
-        }
-        
+        }  
         [HttpPost]
         [Route("Movie/AddMovie")]
         public async Task<IActionResult> AgregarPelicula([FromBody] Pelicula pelicula)

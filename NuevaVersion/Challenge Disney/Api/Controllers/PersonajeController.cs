@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Data;
@@ -20,8 +21,9 @@ namespace Api.Controllers
         [Route("Characters/ListCharacters")]
         public async Task<IActionResult> GetCharacters()
         {
-            //ordeno los personajes por nombre
-            var lista = await _db.Personajes.Where(p => p.Activo == true).OrderBy(p => p.Nombre).ToListAsync();
+            var query = (from Pel in _db.Personajes
+                         select new { Pel.Nombre, Pel.imagen });
+            var lista = await query.ToListAsync();
             return Ok(lista);
         }
         [HttpGet]
@@ -38,6 +40,19 @@ namespace Api.Controllers
         {
             //ordeno los personajes por nombre
             var lista = await _db.Personajes.Where(p => p.Activo == true && p.Edad == Edad).OrderBy(p => p.Nombre).ToListAsync();
+            return Ok(lista);
+        }
+        [HttpGet]
+        [Route("Characters/SearchCharacterForMovie")]
+        public async Task<IActionResult> GetCharactersForMovie(int IdPelicula)
+        {
+            var query = (from Per in _db.Personajes
+                         join PP in _db.PeliculaPorPersonajes on Per.Id equals PP.IdPersonaje
+                         join Ps in _db.Peliculas on PP.IdPelicula equals Ps.Id
+                         where PP.IdPelicula == IdPelicula
+                         select Per.Nombre);
+            //ordeno los personajes por nombre
+            var lista = await query.ToListAsync();
             return Ok(lista);
         }
         [HttpPost]
@@ -60,6 +75,25 @@ namespace Api.Controllers
             return Ok();
         }
 
+        public JsonResult SaveFileLogo()
+        {
+            try
+            {
+                var HttpRequest = Request.Form;
+                var PostedFile = HttpRequest.Files[0];
+                string FileName = PostedFile.FileName;
+                var PhysicalPath = "wwwroot/Personajes/" + FileName;
+                using (var stream = new FileStream(PhysicalPath, FileMode.Create))
+                {
+                    PostedFile.CopyTo(stream);
+                }
+                return new JsonResult(FileName);
+            }
+            catch (Exception)
+            {
+                return new JsonResult("Anonymous.png");
+            }
+        }
 
     }
 }

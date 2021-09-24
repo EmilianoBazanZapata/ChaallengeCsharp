@@ -23,7 +23,6 @@ namespace Api.Models
         public int IdGenero { get; set; }
         [Required]
         public Boolean Activo { get; set; }
-        public virtual ICollection<Personaje> Personajes { get; set; }
         [ForeignKey("IdGenero")]
         public virtual ICollection<Genero> Generos { get; set; }
     }

@@ -21,7 +21,7 @@ namespace Api.Models
         public string imagen {get;set;}
         [Required]
         public Boolean Activo{get;set;}
-        public virtual ICollection<Pelicula> Peliculas {get;set;}
+        
 
     }
 }
