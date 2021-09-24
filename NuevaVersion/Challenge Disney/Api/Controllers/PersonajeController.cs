@@ -24,6 +24,15 @@ namespace Api.Controllers
             var lista = await _db.Personajes.Where(p => p.Activo == true).OrderBy(p => p.Nombre).ToListAsync();
             return Ok(lista);
         }
+        [HttpGet]
+        [Route("Characters/SearchCharacterForName")]
+        public async Task<IActionResult> GetCharacters(string Nombre)
+        {
+            //ordeno los personajes por nombre
+            var lista = await _db.Personajes.Where(p => p.Activo == true && p.Nombre == Nombre).OrderBy(p => p.Nombre).ToListAsync();
+            return Ok(lista);
+        }
+        
         [HttpPost]
         [Route("Characters/AddCharacter")]
         public async Task<IActionResult> AgregarPelicula([FromBody] Personaje personaje)
