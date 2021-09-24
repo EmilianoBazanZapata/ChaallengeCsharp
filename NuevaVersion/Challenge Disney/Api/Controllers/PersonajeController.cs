@@ -24,6 +24,25 @@ namespace Api.Controllers
             var lista = await _db.Personajes.Where(p => p.Activo == true).OrderBy(p => p.Nombre).ToListAsync();
             return Ok(lista);
         }
+        [HttpPost]
+        [Route("Characters/AddCharacter")]
+        public async Task<IActionResult> AgregarPelicula([FromBody] Personaje personaje)
+        {
+            //diferentes validaciones
+            if (personaje == null)
+            {
+                return BadRequest(ModelState);
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            //si todo sale bien podre agregar un personaje
+            await _db.AddAsync(personaje);
+            //por ultimo gurado los cambios
+            await _db.SaveChangesAsync();
+            return Ok();
+        }
 
 
     }
