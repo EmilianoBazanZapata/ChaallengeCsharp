@@ -97,7 +97,30 @@ namespace Api.Controllers
             await _db.SaveChangesAsync();
             return Ok();
         }
+        [HttpPut]
+        [Route("Character/ReactivateCharacter")]
+        public async Task<IActionResult> ReactivateCharacter(int id)
+        {
+            //selecciono la pelicula que tenga el mismo id
+            var query = (from Per in _db.Personajes
+                         where Per.Id == id
+                         select Per).FirstOrDefault();
+            if (query == null)
+            {
+                return NotFound();
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            //una vez encontrado alcualizo los datos que deseo
+            query.Activo = true;
+            //guardo los cambios
+            await _db.SaveChangesAsync();
+            return Ok();
+        }
         
+
 
 
         public JsonResult SaveFile()
